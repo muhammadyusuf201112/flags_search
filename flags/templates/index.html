@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.container {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+:root {
+  --oq: white;
+  --qora: black;
+  --bg: #fafafa;
+  --shadow: #0000000e;
+}
+body {
+  background-color: var(--bg);
+}
+header {
+  padding: 25px 0;
+  box-shadow: 0px 2px 4px 0px var(--shadow);
+  background-color: var(--oq);
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+h1 {
+  color: var(--qora);
+  font-size: 36px;
+}
+#btn {
+  padding: 8px 12px;
+  background-color: inherit;
+  border: none;
+  font-size: 24px;
+  color: var(--qora);
+}
+
+main {
+  background: var(--bg);
+}
+.flags {
+  padding: 48px 0;
+}
+.flags-input {
+  display: flex;
+  justify-content: space-between;
+}
+input {
+  padding: 18px;
+  background-color: var(--oq);
+  width: 480px;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  box-shadow: 0px 2px 9px 0px var(--shadow);
+}
+select,
+option {
+  border: none;
+  outline: none;
+  box-shadow: 0px 2px 9px 0px var(--shadow);
+  padding: 8px 12px;
+  background-color: var(--oq);
+  color: var(--qora);
+}
+
+.dark {
+  --oq: #2b3844;
+  --qora: white;
+  --bg: #202c36;
+  --shadow: #0000000e;
+}
+.country img {
+  width: 100%;
+  height: 160px;
+}
+.country {
+  width: 264px;
+  background-color: var(--oq);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.country-text {
+  padding: 25px 25px 40px;
+  color: var(--qora);
+}
+.country-text h2,
+p {
+  margin: 8px 0;
+}
+.countries {
+  display: flex;
+  margin-top: 50px;
+  gap: 50px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.back {
+  margin-top: 20px;
+  display: inline-block;
+  padding: 6px 23px;
+  text-decoration: none;
+  color: var(--qora);
+  background-color: var(--oq);
+  box-shadow: 0px 0px 7px 0px var(--shadow);
+}
+a {
+  text-decoration: none;
+}
+
+.brazil {
+  margin-top: 30px;
+  display: flex;
+  gap: 120px;
+  align-items: center;
+  justify-content: center;
+}
+
+.brazil-img {
+  width: 560px;
+  height: 401px;
+}
+.brazil-img img {
+  width: 100%;
+}
+.informations {
+  display: flex;
+  gap: 50px;
+  margin: 30px 0;
+}
+.borders {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+p{
+  color: var(--qora);
+}
+.border-btn {
+  background-color: var(--oq);
+  color: var(--qora);
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0px 0px 4px 1px var(--shadow);
+  padding: 5px 24px;
+}
+
+
+
+@media (max-width: 900px) {
+  .brazil{
+    flex-direction: column;
+    gap: 50px;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .flags-input {
+    display: block;
+    padding: 10px;
+  }
+  .flags-input input {
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 500px) {
+  .flags-input input {
+    width: 250px;
+    display: block;
+  }
+  h1,
+  #btn {
+    font-size: 14px;
+  }
+  .informations,.borders{
+    flex-direction: column;
+  }
+  .brazil-img{
+    width: 300px;
+    height: auto;
+  }
+  .brazil{
+    gap: 15px;
+  }
+}
+
+    </style>
+    
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Where in the world?</h1>
+        <button id="btn"><i class="fa-regular fa-moon"></i> Dark Mode</button>
+      </div>
+    </header>
+    <main>
+      <section class="flags container">
+        <div class="flags-input">
+          <input type="text" placeholder="Search for a country…" />
+          <select id="select">
+            <option selected>All</option>
+            <option>Africa</option>
+            <option>America</option>
+            <option>Asia</option>
+            <option>Europe</option>
+            <option>Oceania</option>
+          </select>
+        </div>
+        <div class="countries" id="countries">
+  
+       
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      function allCountries(){
+    fetch("https://restcountries.com/v3.1/all")
+    .then((response) => response.json())
+    .then((restcountries) => countryView(restcountries));
+}
+
+
+const btn=document.getElementById("btn");
+const countries=document.getElementById("countries")
+const select=document.getElementById("select")
+
+btn.addEventListener("click",()=>{
+    document.body.classList.toggle("dark");
+})
+
+function countryView(davlatlar){
+    countries.innerHTML='';
+    for(let i=0; i<davlatlar.length; i++){
+        const a=document.createElement("a")
+        const country=document.createElement("div")
+        const img=document.createElement("img")
+        const countryText=document.createElement("div")
+        const countryName=document.createElement("h2")
+        const countryPopulation=document.createElement("p")
+        const countryRegion=document.createElement("p")
+        const countryCapital=document.createElement("p")
+        img.src=davlatlar[i].flags.png;
+        country.classList.add("country")
+        countryText.classList.add("country-text")
+        countryName.textContent=davlatlar[i].name.common;
+        countryPopulation.innerHTML=`<b>Population:</b> ${davlatlar[i].population}`;
+        countryRegion.innerHTML=`<b>Region:</b> ${davlatlar[i].region}`;
+        countryCapital.innerHTML=`<b>Capital:</b> ${davlatlar[i].capital}`;
+        countryText.appendChild(countryName);
+        countryText.appendChild(countryPopulation);
+        countryText.appendChild(countryRegion);
+        countryText.appendChild(countryCapital);
+        country.appendChild(img);
+        country.appendChild(countryText);
+        a.appendChild(country);
+        countries.appendChild(a);
+
+
+    }
+}
+
+
+async function getCountriesByRegion(region){
+    const res=await fetch(`https://restcountries.com/v3.1/region/${region}`);
+    const davlatlar= await res.json();
+    countryView(davlatlar);
+}
+select.addEventListener("change",(m)=>{
+    if (m.target.value == "All") {
+        allCountries()
+    } else if {
+        
+    }
+    getCountriesByRegion(m.target.value)
+
+})
+    </script>
+  </body>
+</html>
